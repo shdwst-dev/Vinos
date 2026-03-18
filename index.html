@@ -62,7 +62,11 @@
                 <button data-page="mayoreo" onclick="navigateTo('mayoreo')" class="nav-link transition-colors pb-1 border-b-2 text-gray-300 border-transparent hover:text-[#C5A059]">Venta a Mayoristas</button>
             </div>
 
-            <div class="flex gap-4">
+            <div class="flex items-center gap-4">
+                <button onclick="openCart()" class="relative text-gray-400 hover:text-[#C5A059] transition-colors" aria-label="Abrir carrito">
+                    <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 min-w-[1.1rem] h-[1.1rem] px-1 rounded-full bg-[#7A2F3A] text-stone-100 text-[10px] leading-[1.1rem] text-center font-semibold">0</span>
+                </button>
                 <a href="#" class="text-gray-500 hover:text-[#C5A059] transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
                 <a href="#" class="text-gray-500 hover:text-[#C5A059] transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
                 <a href="#" class="text-gray-500 hover:text-[#C5A059] transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
@@ -261,6 +265,68 @@
 
     </main>
 
+    <div id="cart-overlay" class="fixed inset-0 bg-black/60 z-[70] hidden" onclick="closeCart()"></div>
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[420px] bg-zinc-900 border-l border-zinc-700 z-[80] transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="px-6 py-5 border-b border-zinc-700 flex items-center justify-between">
+            <h3 class="text-2xl font-serif text-stone-100">Carrito de Compras</h3>
+            <button onclick="closeCart()" class="text-gray-400 hover:text-stone-200" aria-label="Cerrar carrito">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <p class="text-stone-400 text-sm">Tu carrito está vacío.</p>
+        </div>
+
+        <div class="border-t border-zinc-700 p-6 space-y-4">
+            <div class="flex items-center justify-between text-stone-200">
+                <span class="uppercase tracking-wider text-sm">Subtotal</span>
+                <span id="cart-subtotal" class="text-xl font-semibold">$0 MXN</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="clearCart()" class="border border-zinc-600 text-stone-300 hover:bg-zinc-800 py-2.5 rounded text-sm font-semibold uppercase tracking-wider transition-colors">
+                    Vaciar
+                </button>
+                <button onclick="openCheckoutMenu()" class="bg-[#7A2F3A] hover:bg-[#6a2832] text-stone-100 py-2.5 rounded text-sm font-semibold uppercase tracking-wider transition-colors">
+                    Comprar
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <div id="checkout-overlay" class="fixed inset-0 bg-black/70 z-[85] hidden" onclick="closeCheckoutMenu()"></div>
+    <section id="checkout-modal" class="fixed inset-x-0 top-1/2 -translate-y-1/2 mx-auto w-[95%] max-w-2xl bg-zinc-900 border border-zinc-700 rounded-xl z-[90] hidden">
+        <div class="px-6 py-5 border-b border-zinc-700 flex items-center justify-between">
+            <h3 class="text-2xl font-serif text-stone-100">Finalizar Compra</h3>
+            <button onclick="closeCheckoutMenu()" class="text-gray-400 hover:text-stone-200" aria-label="Cerrar menú de compra">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <div class="p-6 grid md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+                <h4 class="text-sm uppercase tracking-wider text-[#C5A059]">Datos de envío</h4>
+                <input id="checkout-name" type="text" placeholder="Nombre completo" class="w-full bg-zinc-800 border border-zinc-600 rounded px-3 py-2.5 text-stone-100 focus:outline-none focus:ring-2 focus:ring-[#C5A059]" />
+                <input id="checkout-phone" type="tel" placeholder="Teléfono" class="w-full bg-zinc-800 border border-zinc-600 rounded px-3 py-2.5 text-stone-100 focus:outline-none focus:ring-2 focus:ring-[#C5A059]" />
+                <input id="checkout-email" type="email" placeholder="Correo electrónico" class="w-full bg-zinc-800 border border-zinc-600 rounded px-3 py-2.5 text-stone-100 focus:outline-none focus:ring-2 focus:ring-[#C5A059]" />
+                <textarea id="checkout-address" rows="3" placeholder="Dirección de entrega" class="w-full bg-zinc-800 border border-zinc-600 rounded px-3 py-2.5 text-stone-100 focus:outline-none focus:ring-2 focus:ring-[#C5A059]"></textarea>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="text-sm uppercase tracking-wider text-[#C5A059]">Resumen del pedido</h4>
+                <div id="checkout-summary" class="bg-zinc-800 border border-zinc-700 rounded p-4 max-h-48 overflow-y-auto space-y-2 text-sm text-stone-300"></div>
+                <div class="bg-zinc-800/60 border border-zinc-700 rounded p-4 space-y-2">
+                    <div class="flex justify-between text-stone-300"><span>Subtotal</span><span id="checkout-subtotal">$0 MXN</span></div>
+                    <div class="flex justify-between text-stone-400 text-xs"><span>Pago</span><span>Se coordina después del pedido</span></div>
+                </div>
+                <button onclick="submitOrder()" class="w-full bg-[#7A2F3A] hover:bg-[#6a2832] text-stone-100 py-2.5 rounded text-sm font-semibold uppercase tracking-wider transition-colors">
+                    Confirmar pedido
+                </button>
+                <p class="text-xs text-zinc-400">Este menú no procesa pagos. Solo registra tu solicitud de compra.</p>
+            </div>
+        </div>
+    </section>
+
     <footer class="bg-zinc-950 pt-16 pb-8 border-t border-zinc-800 mt-auto">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div class="col-span-1 md:col-span-1">
@@ -327,6 +393,13 @@
         document.getElementById('copyright-year').innerText = `© ${new Date().getFullYear()} Legado de Sangre. Todos los derechos reservados.`;
 
         let currentPage = 'home';
+        const cart = JSON.parse(localStorage.getItem('legado-cart') || '[]');
+        const productData = {
+            id: 'legado-sangre-tinto-reserva',
+            name: 'Legado de Sangre Tinto Reserva',
+            price: 850,
+            image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80'
+        };
 
         function navigateTo(pageId) {
             document.querySelectorAll('.page-section').forEach(el => {
@@ -372,11 +445,163 @@
             const quantity = Number(qtyInput?.value || 1);
             const normalizedQty = Number.isFinite(quantity) && quantity > 0 ? Math.floor(quantity) : 1;
             qtyInput.value = normalizedQty;
-            alert(`Añadiste ${normalizedQty} botella(s) de Legado de Sangre Tinto Reserva al carrito.`);
+
+            const existingItem = cart.find(item => item.id === productData.id);
+            if (existingItem) {
+                existingItem.qty += normalizedQty;
+            } else {
+                cart.push({ ...productData, qty: normalizedQty });
+            }
+
+            persistCart();
+            renderCart();
+            openCart();
+        }
+
+        function persistCart() {
+            localStorage.setItem('legado-cart', JSON.stringify(cart));
+        }
+
+        function getCartCount() {
+            return cart.reduce((sum, item) => sum + item.qty, 0);
+        }
+
+        function formatMoney(amount) {
+            return `$${amount.toLocaleString('es-MX')} MXN`;
+        }
+
+        function renderCart() {
+            const cartCount = document.getElementById('cart-count');
+            const cartItems = document.getElementById('cart-items');
+            const cartSubtotal = document.getElementById('cart-subtotal');
+
+            const itemCount = getCartCount();
+            cartCount.textContent = itemCount;
+
+            if (!cart.length) {
+                cartItems.innerHTML = '<p class="text-stone-400 text-sm">Tu carrito está vacío.</p>';
+                cartSubtotal.textContent = formatMoney(0);
+                return;
+            }
+
+            cartItems.innerHTML = cart.map(item => `
+                <div class="bg-zinc-800 border border-zinc-700 rounded-lg p-4">
+                    <div class="flex gap-3">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-20 object-cover rounded" />
+                        <div class="flex-1 min-w-0">
+                            <p class="text-stone-100 text-sm font-medium leading-snug">${item.name}</p>
+                            <p class="text-[#C5A059] text-sm mt-1">${formatMoney(item.price)}</p>
+                            <div class="mt-3 flex items-center gap-2">
+                                <button onclick="decreaseItem('${item.id}')" class="w-7 h-7 rounded border border-zinc-600 text-stone-300 hover:bg-zinc-700">-</button>
+                                <span class="text-stone-200 text-sm w-6 text-center">${item.qty}</span>
+                                <button onclick="increaseItem('${item.id}')" class="w-7 h-7 rounded border border-zinc-600 text-stone-300 hover:bg-zinc-700">+</button>
+                                <button onclick="removeItem('${item.id}')" class="ml-auto text-xs text-red-300 hover:text-red-200">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            cartSubtotal.textContent = formatMoney(subtotal);
+            lucide.createIcons();
+        }
+
+        function openCart() {
+            document.getElementById('cart-overlay').classList.remove('hidden');
+            document.getElementById('cart-drawer').classList.remove('translate-x-full');
+        }
+
+        function closeCart() {
+            document.getElementById('cart-overlay').classList.add('hidden');
+            document.getElementById('cart-drawer').classList.add('translate-x-full');
+        }
+
+        function increaseItem(id) {
+            const item = cart.find(product => product.id === id);
+            if (!item) return;
+            item.qty += 1;
+            persistCart();
+            renderCart();
+        }
+
+        function decreaseItem(id) {
+            const item = cart.find(product => product.id === id);
+            if (!item) return;
+            item.qty -= 1;
+            if (item.qty <= 0) {
+                removeItem(id);
+                return;
+            }
+            persistCart();
+            renderCart();
+        }
+
+        function removeItem(id) {
+            const index = cart.findIndex(product => product.id === id);
+            if (index === -1) return;
+            cart.splice(index, 1);
+            persistCart();
+            renderCart();
+        }
+
+        function clearCart() {
+            cart.length = 0;
+            persistCart();
+            renderCart();
+        }
+
+        function openCheckoutMenu() {
+            if (!cart.length) {
+                alert('Tu carrito está vacío. Agrega al menos un producto para continuar.');
+                return;
+            }
+
+            const checkoutSummary = document.getElementById('checkout-summary');
+            const checkoutSubtotal = document.getElementById('checkout-subtotal');
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            checkoutSummary.innerHTML = cart.map(item => `
+                <div class="flex justify-between gap-2 border-b border-zinc-700 pb-2">
+                    <span class="text-stone-200">${item.name} x${item.qty}</span>
+                    <span>${formatMoney(item.price * item.qty)}</span>
+                </div>
+            `).join('');
+
+            checkoutSubtotal.textContent = formatMoney(subtotal);
+            document.getElementById('checkout-overlay').classList.remove('hidden');
+            document.getElementById('checkout-modal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeCheckoutMenu() {
+            document.getElementById('checkout-overlay').classList.add('hidden');
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        function submitOrder() {
+            const name = document.getElementById('checkout-name').value.trim();
+            const phone = document.getElementById('checkout-phone').value.trim();
+            const address = document.getElementById('checkout-address').value.trim();
+
+            if (!name || !phone || !address) {
+                alert('Completa nombre, teléfono y dirección para confirmar el pedido.');
+                return;
+            }
+
+            alert('Pedido registrado correctamente. Te contactaremos para confirmar entrega y pago.');
+            clearCart();
+            document.getElementById('checkout-name').value = '';
+            document.getElementById('checkout-phone').value = '';
+            document.getElementById('checkout-email').value = '';
+            document.getElementById('checkout-address').value = '';
+            closeCheckoutMenu();
+            closeCart();
         }
 
         window.addEventListener('scroll', updateNavbar);
         navigateTo('home');
+        renderCart();
     </script>
 </body>
 </html>
