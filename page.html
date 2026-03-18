@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legado de Sangre | Tinto Reserva</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts (Opcional, para mejorar la tipografía) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #141414;
+            color: #e5e7eb;
+        }
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Color de selección global */
+        ::selection {
+            background-color: #8B0000;
+            color: white;
+        }
+        /* Utilidad para animar la aparición de páginas */
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Para limitar lineas de texto en los teasers */
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- --- NAVEGACIÓN GLOBAL --- -->
+    <nav id="main-nav" class="fixed w-full z-50 transition-all duration-300 border-b bg-transparent border-transparent py-6">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            
+            <!-- Logo (Clickeable para ir a Home) -->
+            <div class="text-2xl font-serif text-[#D4AF37] font-bold tracking-widest flex items-center gap-2 cursor-pointer" onclick="navigateTo('home')">
+                <i data-lucide="wine" class="w-8 h-8 text-[#8B0000]"></i>
+                <div class="flex flex-col">
+                    <span class="leading-none">LEGADO DE SANGRE</span>
+                    <span class="text-[0.6rem] tracking-[0.3em] text-gray-400 mt-1">TINTO RESERVA</span>
+                </div>
+            </div>
+
+            <!-- Enlaces de Páginas -->
+            <div class="hidden md:flex gap-8 text-sm uppercase tracking-wider font-semibold">
+                <button data-page="historia" onclick="navigateTo('historia')" class="nav-link transition-colors pb-1 border-b-2 text-gray-300 border-transparent hover:text-[#D4AF37]">
+                    Historia
+                </button>
+                <button data-page="vino" onclick="navigateTo('vino')" class="nav-link transition-colors pb-1 border-b-2 text-gray-300 border-transparent hover:text-[#D4AF37]">
+                    Nuestro Vino
+                </button>
+                <button data-page="mayoreo" onclick="navigateTo('mayoreo')" class="nav-link transition-colors pb-1 border-b-2 text-gray-300 border-transparent hover:text-[#D4AF37]">
+                    Venta a Mayoristas
+                </button>
+            </div>
+
+            <!-- Redes Sociales -->
+            <div class="flex gap-4">
+                <a href="#" class="text-gray-400 hover:text-[#D4AF37] transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                <a href="#" class="text-gray-400 hover:text-[#D4AF37] transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                <a href="#" class="text-gray-400 hover:text-[#D4AF37] transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- --- CONTENEDOR PRINCIPAL DE PÁGINAS --- -->
+    <main id="app-content" class="flex-grow">
+        
+        <!-- PÁGINA: HOME -->
+        <div id="page-home" class="page-section animate-fadeIn block">
+            <section class="relative h-screen flex items-center justify-center overflow-hidden">
+                <div class="absolute inset-0">
+                    <img src="https://images.unsplash.com/photo-1504279577054-acfeccf8fc52?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="" class="w-full h-full object-cover opacity-40" />
+                    <div class="absolute inset-0 bg-gradient-to-b from-[#141414]/50 via-transparent to-[#141414]"></div>
+                </div>
+                
+                <div class="relative z-10 text-center max-w-4xl px-6 mt-16">
+                    <h2 class="text-[#D4AF37] tracking-[0.3em] text-sm md:text-base uppercase mb-4">Desde 1892 • Alt Penedès</h2>
+                    <h1 class="text-5xl md:text-7xl font-serif font-bold text-white mb-6 leading-tight">
+                        La lealtad <br/><span class="italic text-gray-300 font-light">transformada en vino.</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto font-light">
+                        Un tinto reserva nacido de la resistencia, dedicado a quienes honran sus raíces y aprecian la elegancia en cada copa.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="navigateTo('vino')" class="bg-[#8B0000] hover:bg-[#660000] text-white px-8 py-3 rounded uppercase tracking-wider text-sm font-semibold transition-all">
+                            Descubrir el Vino
+                        </button>
+                        <button onclick="navigateTo('mayoreo')" class="border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black px-8 py-3 rounded uppercase tracking-wider text-sm font-semibold transition-all">
+                            Venta a Mayoristas
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Teasers para las otras páginas -->
+            <section class="py-20 bg-[#141414]">
+                <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12">
+                    <div class="bg-[#1a1a1a] p-10 rounded border border-gray-800 hover:border-[#D4AF37] transition-all group cursor-pointer" onclick="navigateTo('historia')">
+                        <h3 class="text-2xl font-serif text-white mb-4 group-hover:text-[#D4AF37] transition-colors">Nuestra Historia</h3>
+                        <p class="text-gray-400 mb-6 line-clamp-3">Conoce a Joan de Sangre y el pacto que forjó en 1892 para proteger los viñedos de la filoxera en el corazón de Cataluña.</p>
+                        <span class="text-[#D4AF37] flex items-center gap-2 text-sm font-bold uppercase tracking-wider">Leer más <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                    </div>
+                    <div class="bg-[#1a1a1a] p-10 rounded border border-gray-800 hover:border-[#D4AF37] transition-all group cursor-pointer" onclick="navigateTo('mayoreo')">
+                        <h3 class="text-2xl font-serif text-white mb-4 group-hover:text-[#D4AF37] transition-colors">Alianzas Comerciales</h3>
+                        <p class="text-gray-400 mb-6 line-clamp-3">Esquemas de rentabilidad diseñados para restaurantes exclusivos y distribuidores. Descuentos desde 100 hasta más de 300 botellas.</p>
+                        <span class="text-[#D4AF37] flex items-center gap-2 text-sm font-bold uppercase tracking-wider">Ver Programa <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PÁGINA: HISTORIA -->
+        <div id="page-historia" class="page-section animate-fadeIn hidden pt-24 bg-[#1a1a1a] min-h-screen">
+            <div class="max-w-7xl mx-auto px-6 py-16">
+                <div class="text-center mb-16">
+                    <h2 class="text-[#D4AF37] tracking-[0.3em] text-sm uppercase mb-4">El Origen</h2>
+                    <h1 class="text-5xl font-serif font-bold text-white mb-6">Joan de Sangre</h1>
+                    <div class="w-20 h-1 bg-[#8B0000] mx-auto"></div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div class="relative">
+                        <div class="absolute inset-0 border-2 border-[#D4AF37] transform translate-x-4 translate-y-4 rounded"></div>
+                        <img src="https://images.unsplash.com/photo-1559564478-1b6938dc81cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="" class="relative z-10 rounded shadow-2xl grayscale contrast-125 sepia-[.3]" />
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-serif text-white mb-6">Un pacto con la tierra</h3>
+                        <p class="text-gray-300 text-lg mb-6 leading-relaxed font-light">
+                            En 1892, en el corazón del Alt Penedès, cuando la filoxera devastaba los viñedos de Cataluña, Joan de Sangre se negó a abandonar su tierra y prometió dedicar su linaje a protegerla si esta volvía a dar fruto.
+                        </p>
+                        <p class="text-gray-300 text-lg mb-6 leading-relaxed font-light">
+                            Contra todo pronóstico, sus campos renacieron. La vid demostró la misma terquedad que Joan, arraigándose profundo en el suelo catalán para sobrevivir. 
+                        </p>
+                        <p class="text-gray-300 text-lg mb-8 leading-relaxed font-light">
+                            Para honrar aquel pacto y el sacrificio de quien se negó a rendirse, nació <strong>Legado de Sangre</strong>: un vino que transforma la lealtad, la pasión y la resistencia en una experiencia inconfundible y elegante.
+                        </p>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Signature_placeholder.svg/1200px-Signature_placeholder.svg.png" class="h-16 opacity-50 invert" alt="Firma" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA: VINO -->
+        <div id="page-vino" class="page-section animate-fadeIn hidden pt-24 bg-[#141414] min-h-screen">
+            <div class="max-w-7xl mx-auto px-6 py-16">
+                <div class="flex flex-col md:flex-row items-center gap-16">
+                    <div class="w-full md:w-1/2">
+                        <h3 class="text-[#D4AF37] tracking-widest text-sm uppercase mb-2">Producto de España</h3>
+                        <h1 class="text-5xl md:text-6xl font-serif font-bold text-white mb-6">Tinto Reserva</h1>
+                        <div class="w-20 h-1 bg-[#8B0000] mb-8"></div>
+                        
+                        <p class="text-gray-400 mb-8 leading-relaxed text-lg">
+                            Nacido en el corazón del Alt Penedès, una de las regiones vitivinícolas más prestigiosas de Cataluña. Esta zona es reconocida por su equilibrio entre veranos cálidos y excelente exposición solar.
+                        </p>
+                        
+                        <div class="bg-[#1a1a1a] p-8 rounded-lg border border-gray-800">
+                            <h4 class="text-white font-serif text-2xl mb-6">Ficha Técnica</h4>
+                            <ul class="space-y-6">
+                                <li class="flex items-start gap-4">
+                                    <div class="w-2 h-2 mt-2 rounded-full bg-[#D4AF37]"></div>
+                                    <div>
+                                        <strong class="text-white block text-lg mb-1">Varietal</strong>
+                                        <span class="text-gray-400">Tempranillo / Cabernet Sauvignon</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-4">
+                                    <div class="w-2 h-2 mt-2 rounded-full bg-[#D4AF37]"></div>
+                                    <div>
+                                        <strong class="text-white block text-lg mb-1">Origen</strong>
+                                        <span class="text-gray-400">Cataluña, Barcelona</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-4">
+                                    <div class="w-2 h-2 mt-2 rounded-full bg-[#D4AF37]"></div>
+                                    <div>
+                                        <strong class="text-white block text-lg mb-1">Especificaciones</strong>
+                                        <span class="text-gray-400">Cont. Net: 750 ml | 14.2% Alc. Vol.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-4">
+                                    <div class="w-2 h-2 mt-2 rounded-full bg-[#D4AF37]"></div>
+                                    <div>
+                                        <strong class="text-white block text-lg mb-1">Notas de Producción</strong>
+                                        <span class="text-gray-400">Maduración lenta, acidez natural conservada. Aporta estructura, profundidad e intensidad aromática.</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/2 flex justify-center">
+                        <div class="relative">
+                            <div class="absolute inset-0 bg-[#8B0000] rounded-full blur-[120px] opacity-30"></div>
+                            <img src="https://images.unsplash.com/photo-1584916201218-f4242ceb4809?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="" class="relative z-10 h-[600px] object-cover rounded-lg shadow-2xl border border-gray-800" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA: MAYOREO -->
+        <div id="page-mayoreo" class="page-section animate-fadeIn hidden pt-24 bg-gradient-to-b from-[#1a1a1a] to-[#141414] min-h-screen">
+            <div class="max-w-7xl mx-auto px-6 py-16 text-center">
+                <h2 class="text-[#D4AF37] tracking-widest text-sm uppercase mb-2">Socios Comerciales</h2>
+                <h1 class="text-4xl md:text-5xl font-serif font-bold text-white mb-6">Programa de Distribuidores</h1>
+                <div class="w-20 h-1 bg-[#8B0000] mx-auto mb-8"></div>
+                
+                <p class="text-gray-400 max-w-3xl mx-auto mb-16 text-lg">
+                    Únete a nuestra selecta red. Hemos diseñado un esquema de rentabilidad estructurado específicamente para elevar la oferta de restaurantes exclusivos y potenciar los márgenes de nuestros distribuidores de confianza.
+                </p>
+
+                <!-- Tarjetas de Precios / Niveles -->
+                <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto text-left">
+                    
+                    <!-- Nivel Plata -->
+                    <div class="bg-[#1c1c1c] border border-gray-800 p-8 rounded-lg hover:border-[#8B0000] transition-colors relative flex flex-col h-full text-center">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#8B0000] text-white p-3 rounded-full">
+                            <i data-lucide="star" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-2xl font-serif text-white mt-4 mb-2">Nivel Plata</h4>
+                        <p class="text-gray-400 mb-6 pb-6 border-b border-gray-800 min-h-[80px]">Ideal para restaurantes boutique, maridajes exclusivos y eventos corporativos privados.</p>
+                        <div class="text-5xl font-bold text-[#D4AF37] mb-2">5% <span class="text-xl text-gray-500 font-normal">Off</span></div>
+                        <p class="text-lg text-white font-medium mb-8">100 a 200 botellas</p>
+                        <button class="mt-auto w-full bg-transparent border border-gray-600 text-gray-300 hover:bg-white hover:text-black py-3 rounded font-semibold transition-all">
+                            Solicitar Plata
+                        </button>
+                    </div>
+
+                    <!-- Nivel Oro -->
+                    <div class="bg-[#1c1c1c] border border-[#D4AF37] p-8 rounded-lg transform md:-translate-y-4 relative shadow-[0_0_30px_rgba(212,175,55,0.1)] flex flex-col h-full z-10 text-center">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#D4AF37] text-black p-3 rounded-full">
+                            <i data-lucide="trending-up" class="w-6 h-6"></i>
+                        </div>
+                        <div class="absolute -top-3 right-4 bg-[#8B0000] text-xs font-bold px-3 py-1 rounded text-white uppercase tracking-wider">
+                            Más Popular
+                        </div>
+                        <h4 class="text-2xl font-serif text-white mt-4 mb-2">Nivel Oro</h4>
+                        <p class="text-gray-400 mb-6 pb-6 border-b border-gray-800 min-h-[80px]">La opción preferida por nuestros distribuidores activos y cadenas restauranteras.</p>
+                        <div class="text-5xl font-bold text-[#D4AF37] mb-2">8% <span class="text-xl text-gray-500 font-normal">Off</span></div>
+                        <p class="text-lg text-white font-medium mb-8">201 a 300 botellas</p>
+                        <button class="mt-auto w-full bg-[#D4AF37] text-black hover:bg-[#b5952f] py-3 rounded font-bold transition-all">
+                            Afiliarse a Oro
+                        </button>
+                    </div>
+
+                    <!-- Nivel Platino -->
+                    <div class="bg-[#1c1c1c] border border-gray-800 p-8 rounded-lg hover:border-[#8B0000] transition-colors relative flex flex-col h-full text-center">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#8B0000] text-white p-3 rounded-full">
+                            <i data-lucide="users" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-2xl font-serif text-white mt-4 mb-2">Nivel Platino</h4>
+                        <p class="text-gray-400 mb-6 pb-6 border-b border-gray-800 min-h-[80px]">Máxima rentabilidad para mayoristas consolidados y grandes canales de distribución.</p>
+                        <div class="text-5xl font-bold text-[#D4AF37] mb-2">10% <span class="text-xl text-gray-500 font-normal">Off</span></div>
+                        <p class="text-lg text-white font-medium mb-8">Más de 301 botellas</p>
+                        <button class="mt-auto w-full bg-transparent border border-gray-600 text-gray-300 hover:bg-white hover:text-black py-3 rounded font-semibold transition-all">
+                            Contactar a Ventas
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Banner de Capacidad -->
+                <div class="mt-20 bg-[#141414] p-10 rounded-xl border border-gray-800 max-w-4xl mx-auto grid md:grid-cols-2 gap-8 items-center text-left">
+                    <div>
+                        <h4 class="text-white font-serif text-2xl mb-3">Capacidad Garantizada</h4>
+                        <p class="text-gray-400">Contamos con infraestructura y stock permanente en bodega para cubrir la alta demanda de nuestra red B2B sin interrupciones.</p>
+                    </div>
+                    <div class="flex justify-around bg-[#1a1a1a] p-6 rounded-lg border border-gray-800">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-[#D4AF37] mb-1">5,000</div>
+                            <div class="text-xs text-gray-500 uppercase tracking-widest font-bold">Stock Total</div>
+                        </div>
+                        <div class="w-px bg-gray-700"></div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-[#8B0000] mb-1">4,300</div>
+                            <div class="text-xs text-gray-500 uppercase tracking-widest font-bold">Distribución</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- --- FOOTER GLOBAL --- -->
+    <footer class="bg-[#0a0a0a] pt-16 pb-8 border-t border-gray-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            
+            <div class="col-span-1 md:col-span-1">
+                <div class="text-xl font-serif text-[#D4AF37] mb-6 flex items-center gap-2 cursor-pointer" onclick="navigateTo('home')">
+                    <i data-lucide="wine" class="w-6 h-6 text-[#8B0000]"></i>
+                    LEGADO DE SANGRE
+                </div>
+                <p class="text-gray-500 text-sm mb-6">
+                    Un vino que transforma la lealtad, la pasión y la resistencia en una experiencia inconfundible.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Dirección</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5"></i>
+                        <span>Alt Penedès, Cataluña<br/>España</span>
+                    </li>
+                    <li class="flex items-start gap-3 mt-4">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5"></i>
+                        <span>Importador México:<br/>Comercializadora Sabor S.A. de C.V.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Horario de Atención</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li class="flex items-center gap-3">
+                        <i data-lucide="clock" class="w-4 h-4 text-[#D4AF37]"></i>
+                        <span>Lunes a Viernes: 9:00 - 18:00</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i data-lucide="clock" class="w-4 h-4 text-[#D4AF37]"></i>
+                        <span>Sábado: 10:00 - 14:00</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Contacto</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li class="flex items-center gap-3">
+                        <i data-lucide="mail" class="w-4 h-4 text-[#D4AF37]"></i>
+                        <a href="mailto:noevggmm@gmail.com" class="hover:text-white transition-colors">noevggmm@gmail.com</a>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i data-lucide="mail" class="w-4 h-4 text-[#D4AF37]"></i>
+                        <a href="mailto:legadodisangre@gmail.com" class="hover:text-white transition-colors">legadodisangre@gmail.com</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-gray-900 text-center text-xs text-gray-600 flex flex-col md:flex-row justify-between items-center">
+            <p class="mb-2 md:mb-0">EL ABUSO EN EL CONSUMO DE ESTE PRODUCTO ES NOCIVO PARA LA SALUD. +18</p>
+            <p id="copyright-year"></p>
+        </div>
+    </footer>
+
+    <!-- --- SCRIPT DE NAVEGACIÓN Y LÓGICA --- -->
+    <script>
+        // Inicializar iconos de Lucide
+        lucide.createIcons();
+        
+        // Poner año actual en el footer
+        document.getElementById('copyright-year').innerText = `© ${new Date().getFullYear()} Legado de Sangre. Todos los derechos reservados.`;
+
+        // Estado actual de la página
+        let currentPage = 'home';
+
+        // Función de Enrutamiento (SPA Simulator)
+        function navigateTo(pageId) {
+            // 1. Ocultar todas las páginas
+            document.querySelectorAll('.page-section').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            });
+            
+            // 2. Mostrar la página seleccionada
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                targetPage.classList.add('block');
+            }
+            
+            // 3. Actualizar estado
+            currentPage = pageId;
+            
+            // 4. Volver al inicio de la página automáticamente
+            window.scrollTo(0, 0);
+            
+            // 5. Actualizar estilos de los botones en la navegación superior
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.dataset.page === pageId) {
+                    // Estado Activo
+                    link.classList.add('text-[#D4AF37]', 'border-[#D4AF37]');
+                    link.classList.remove('text-gray-300', 'border-transparent');
+                } else {
+                    // Estado Inactivo
+                    link.classList.remove('text-[#D4AF37]', 'border-[#D4AF37]');
+                    link.classList.add('text-gray-300', 'border-transparent');
+                }
+            });
+
+            // 6. Forzar actualización del color de fondo del Navbar
+            updateNavbar();
+        }
+
+        // Función para cambiar el estilo del navbar al hacer scroll
+        function updateNavbar() {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 50 || currentPage !== 'home') {
+                nav.classList.add('bg-[#1a1a1a]', 'border-gray-800', 'py-3', 'shadow-lg');
+                nav.classList.remove('bg-transparent', 'border-transparent', 'py-6');
+            } else {
+                nav.classList.add('bg-transparent', 'border-transparent', 'py-6');
+                nav.classList.remove('bg-[#1a1a1a]', 'border-gray-800', 'py-3', 'shadow-lg');
+            }
+        }
+
+        // Escuchar el evento de scroll en la ventana
+        window.addEventListener('scroll', updateNavbar);
+    </script>
+</body>
+</html>
